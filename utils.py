@@ -18,9 +18,13 @@ def load_all(students):
     path = '/sdcard/Project/Store/'
     file_name = r_no + ' - ' + name + ' (' + fac_no + ')' +'.html'
     os.chdir(path)
-    with open(file_name, 'r+') as fi:
-      page = fi.read()
-      soup = BeautifulSoup(page)
+    try:
+      with open(file_name, 'r+') as fi:
+        page = fi.read()
+        soup = BeautifulSoup(page)
+    except IOError as err:
+      print('HTML file not found. Download files by option 1 first...') 
+      return
     try:
       spi = soup('table')[2].findAll('tr')[1].findAll('th')[5].string.strip()
       cpi = soup('table')[2].findAll('tr')[1].findAll('th')[4].string.strip()
@@ -29,7 +33,7 @@ def load_all(students):
       cpi = 0
     students[key]['spi'] = spi
     students[key]['cpi'] = cpi
-    print(students[key]['name'], 'done') 
+    print('Loaded:', students[key]['name']) 
   save(students)
   return students
 
@@ -57,6 +61,11 @@ def set_marks(students):
     with open('results.db', 'r+') as fi:
       data = fi.read() 
       res = ast.literal_eval(data)
+    if students[1]['name']==res[1]['name']:
+      pass
+    else :
+      print('Database mismatch. Did you download result first?')
+      return
     for key in students.keys():
       try:
         students[key]['cpi'] = res[key]['cpi']
@@ -65,6 +74,7 @@ def set_marks(students):
         students[key]['cpi'] = load(students, key)['cpi']
         students[key]['spi'] = load(students, key)['spi']
     save(students)
+    print('Marks loaded')
     return students
   else:
     load_all(students)
@@ -74,6 +84,12 @@ def create_worksheet(name, students):
   if not os.path.exists('/sdcard/Project/Output'):
     os.makedirs(path)
   os.chdir(path)
+  if os.path.isfile(name):
+    over = input('Worksheet already exists. Do you want to over write?\nY for yes, any key for no... \n')
+    if over == 'Y' or over == 'y':
+      print('Over writing file') 
+    else:
+      return 'Skipping writing file...\n Check in Output/ directory'
   try :
     test = students[1]['cpi']
   except KeyError as err :
@@ -91,7 +107,7 @@ def create_worksheet(name, students):
     col=0
     student = [key, students[key]['fac_no'], students[key]['en_no'], students[key]['name'], students[key]['cpi'], students[key]['spi']]
     for each in student:
-      data_sheet.write(int(key), col, each)
+      data_sheet.write(key, col, each)
       col+=1
       	
   data.close()

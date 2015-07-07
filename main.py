@@ -5,10 +5,49 @@ import time
 import utils
 from bs4 import BeautifulSoup 
 
+welcome = \
+"""
+
+AMU B.Tech Results Downloader
+This Python script downloads B.Tech Results of whole class based on information in attendance Excel file.
+
+First you need to put Excel file in Input/ folder
+Then type the name of file when asked (Default : store.xlsx) 
+This will load the information about students from the Excel file and stores it in students.db for future faster access.
+Then you will prompted 3 options:
+
+    First option downloads the result of whole class and 
+    stores them as html pages in Store/ folder. 
+    Note : This option should be run at least once to 
+    download  all necessary result files for further options
+    If there are no result files in Store/ folder, then 
+    script will not run properly. 
+   
+    Second option loads CPI and SPI from downloaded 
+    html to script database as results.db for future faster
+    access. 
+    Note : This option is necessary to be run in 
+    order to run 3rd option. If this option is not run, 
+    then no data can be written in Excel file. 
+    
+    Third option reads your CPI and SPI from Updated 
+    database and saves the information as Excel file in 
+    Output/ folder.
+    
+    
+Note: App creates required files and databases in iaj/ folder for proper functioning. Please don't delete those files. 
+    
+    
+Let's start:"""
+
 os.chdir('/sdcard/Project/')
 
 url = 'http://ctengg.amu.ac.in/result_btech.php'
     
+# Let's Go!
+
+
+print(welcome) 
 
 def for_student(fac_no, en_no, name):
   r_no = fac_no[5:8]
@@ -44,18 +83,44 @@ def get_result(students):
     
 
 
-def main():
-  name = 'store.xlsx'
+def main(students):
+  menu = \
+'''
+
+
+1. Download Results. 
+2. Load Marks.
+3. Create result worksheet.
+4. Exit
+
+'''
   
-  students = enlist.populate(name)
-
-  if not students == None :
+  print(menu)
+  x = input()
+  
+  if x == '1' :
     get_result(students)
+    input('Press any key to Continue...')
+  elif x == '2' :
     utils.set_marks(students)
+    input('Press any key to Continue...')
+  elif x == '3' : 
     print(utils.create_worksheet(name, students))
+    input('Press any key to Continue...')
+  elif x == '4' :
+    return
   else:
-    print('Error reading student database worksheet')
+    print('Please choose valid option')
+    input('\n\n\nPress any key to Continue...')
+  main(students)
 
-
-# Let's Go! 
-main() 
+wrong=1
+while(wrong):
+  name = input('Enter the Excel file name: ').rstrip()
+  students = None
+  students = enlist.populate(name)
+  if students == None:
+    print('Error reading student database...\nRetry running script')
+  else:
+    wrong = 0
+    main(students)
