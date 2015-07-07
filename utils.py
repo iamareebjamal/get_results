@@ -68,3 +68,33 @@ def set_marks(students):
     return students
   else:
     load_all(students)
+
+def create_worksheet(name, students):
+  path = '/sdcard/Project/Output'
+  if not os.path.exists('/sdcard/Project/Output'):
+    os.makedirs(path)
+  os.chdir(path)
+  try :
+    test = students[1]['cpi']
+  except KeyError as err :
+    return 'Wrong input file. Run 2. Load marks first...'
+  data = xlsxwriter.Workbook(name)
+  data_sheet = data.add_worksheet() 
+  
+  head = ['S. No.', 'Faculty No.', 'Enrolment No.', 'Name', 'CPI', 'SPI']
+  col=0
+  for cell in head:
+    data_sheet.write(0,col, cell)
+    col+=1
+
+  for key in students.keys():
+    col=0
+    student = [key, students[key]['fac_no'], students[key]['en_no'], students[key]['name'], students[key]['cpi'], students[key]['spi']]
+    for each in student:
+      data_sheet.write(int(key), col, each)
+      col+=1
+      	
+  data.close()
+  success = 'Successfully created '+name+' in Output/ directory'
+  return success
+      

@@ -42,11 +42,20 @@ def get_result(students):
     #time.sleep(.5)
   print('\n\nAll results saved')
     
-    
-    
-students = enlist.populate('store.xlsx')
-if not students == None :
-  get_result(students)
-  updated_students = utils.set_marks(students)
-else:
-  print('Error reading student database worksheet')
+
+
+def main():
+  name = 'store.xlsx'
+  
+  students = enlist.populate(name)
+
+  if not students == None :
+    get_result(students)
+    utils.set_marks(students)
+    print(utils.create_worksheet(name, students))
+  else:
+    print('Error reading student database worksheet')
+
+
+# Let's Go! 
+main() 
