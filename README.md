@@ -20,6 +20,7 @@ There's no guarantee that code will be easy to understand. Program is modular an
 ######Screenshots
 ![downloading results](https://raw.githubusercontent.com/iamareebjamal/get_results/master/pics/pic1.png)
 ![downloaded results](https://raw.githubusercontent.com/iamareebjamal/get_results/master/pics/pic2.png)
+![created spreadsheet](https://raw.githubusercontent.com/iamareebjamal/get_results/master/pics/pic3.png)
 
 ######Functions 
 The program does 3 tasks :
