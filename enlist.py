@@ -48,7 +48,6 @@ def is_worksheet(name):
   if os.path.isfile(name):
     try:
       store = xlrd.open_workbook(name)
-      #sheet = store.sheet_by_index(0)
     except xlrd.biffh.XLRDError as err:
       print('Unsupported Format or corrupt file')
       return False
@@ -74,9 +73,8 @@ def get_students(file_name) :
       students[i]['fac_no'] = fac_no 
       students[i]['en_no'] = en_no
       students[i]['name'] = name
-      #print(students[i]['fac_no'], students[i]['en_no'], students[i]['name'])
       i=i+1
-    cd()
+    cd(1)
     with open('students.db', 'w+') as fi:
       print(students, file=fi)
     return students
@@ -87,7 +85,7 @@ def populate(file_name, reset=0):
   path = '/sdcard/Project/iaj/Store'
   if not os.path.exists(path):
     os.makedirs(path)
-  cd(1) 
+  cd(1)
   if os.path.isfile('students.db') and not file_changed(file_name) and not reset:
     with open('students.db', 'r+') as fi:
       s = fi.read()

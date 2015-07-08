@@ -3,6 +3,13 @@ import os
 import ast
 import xlsxwriter
 
+
+def mkdirs():
+  dirs = ['/sdcard/Project/iaj/Store', '/sdcard/Project/Input', '/sdcard/Project/Output']
+  for dire in dirs :
+    if not os.path.exists(dire):
+      os.makedirs(dire)
+
 def cd(a=0):
   if a == 0:
     path = '/sdcard/Project/iaj/'
@@ -12,10 +19,7 @@ def cd(a=0):
     path = '/sdcard/Project/iaj/Store/'
   os.chdir(path)
   
-def mkdirs():
-  dirs = ['/sdcard/Try/iaj/Store', '/sdcard/Try/Input', '/sdcard/Try/Output']
-  for dire in dirs :
-    os.makedirs(dire)
+
 
 def save(students):
   cd() 

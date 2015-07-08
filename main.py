@@ -1,9 +1,14 @@
+import utils
+utils.mkdirs()
+#Let's create all needed directories before anything else!
+
 import requests 
 import os
 import enlist
 import time 
-import utils
 from bs4 import BeautifulSoup 
+
+
 
 welcome = \
 """
@@ -47,6 +52,7 @@ url = 'http://ctengg.amu.ac.in/result_btech.php'
 # Let's Go!
 
 
+
 print(welcome) 
 
 def for_student(fac_no, en_no, name):
@@ -60,14 +66,21 @@ def for_student(fac_no, en_no, name):
     try:
       form_data = {'FN':fac_no, 'EN':en_no, 'submit':'submit'}
       response = requests.post(url, data=form_data)
-      if 'CPI' in response.text:
-        soup = BeautifulSoup(response.text)
-        with open(file_name , 'w+') as ou:
-          print(soup.prettify(), file=ou)
+      
+      soup = BeautifulSoup(response.text)
+      with open(file_name , 'w+') as ou:
+        print(soup.prettify(), file=ou)
+        
+      
+      if 'CPI' in response.text :
         print('Saved result of', name)
-      else :
+      elif 'This Result has not been declared yet!' in response.text:
+        print('No result')
+      elif 'Faculty_No or En_No is incorrect!' in response.text :
+        print('Wrong Faculty or Enrolment No.') 
+      else:
         print('Wrong input data or no result...') 
-        #print('Doesnt exist', file_name)
+    
     except requests.exceptions.ConnectionError as err:
       print('No Connection')
   
@@ -116,12 +129,12 @@ def main(students):
 
 wrong=1
 while(wrong):
-  utils.mkdirs()
+  
   name = input('Enter the Excel file name: ').rstrip()
   students = None
   students = enlist.populate(name)
   if students == None:
-    print('Error reading student database...\nRetry running script')
+    print('Error reading student database...\nHave you put Attendance file in Input/ folder and provided correct name?\n\nRetrying running script')
   else:
     wrong = 0
     main(students)
