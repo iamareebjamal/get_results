@@ -3,10 +3,22 @@ import os
 import ast
 import xlsxwriter
 
-os.chdir('/sdcard/Project/') 
+def cd(a=0):
+  if a == 0:
+    path = '/sdcard/Project/iaj/'
+  elif a == 1 :
+    path = '/sdcard/Project/Output/'
+  elif a == 2: 
+    path = '/sdcard/Project/iaj/Store/'
+  os.chdir(path)
+  
+def mkdirs():
+  dirs = ['/sdcard/Try/iaj/Store', '/sdcard/Try/Input', '/sdcard/Try/Output']
+  for dire in dirs :
+    os.makedirs(dire)
 
 def save(students):
-  os.chdir('/sdcard/Project/') 
+  cd() 
   with open('results.db', 'w+') as fi:
       print(students, file=fi)
 
@@ -15,9 +27,8 @@ def load_all(students):
     name = students[key]['name']
     fac_no = students[key]['fac_no']
     r_no = fac_no[5:8]
-    path = '/sdcard/Project/Store/'
     file_name = r_no + ' - ' + name + ' (' + fac_no + ')' +'.html'
-    os.chdir(path)
+    cd(2)
     try:
       with open(file_name, 'r+') as fi:
         page = fi.read()
@@ -41,9 +52,8 @@ def load(students, key):
   name = students[key]['name']
   fac_no = students[key]['fac_no']
   r_no = fac_no[5:8]
-  path = '/sdcard/Project/Store/'
   file_name = r_no + ' - ' + name + ' (' + fac_no + ')' +'.html'
-  os.chdir(path)
+  cd(2)
   with open(file_name, 'r+') as fi:
     page = fi.read()
     soup = BeautifulSoup(page)
@@ -56,7 +66,7 @@ def load(students, key):
   return {'cpi':cpi, 'spi' : spi}
     
 def set_marks(students):
-  os.chdir('/sdcard/Project/') 
+  cd()
   if os.path.isfile('results.db'):
     with open('results.db', 'r+') as fi:
       data = fi.read() 
@@ -81,9 +91,9 @@ def set_marks(students):
 
 def create_worksheet(name, students):
   path = '/sdcard/Project/Output'
-  if not os.path.exists('/sdcard/Project/Output'):
+  if not os.path.exists(path):
     os.makedirs(path)
-  os.chdir(path)
+  cd(1)
   if os.path.isfile(name):
     over = input('Worksheet already exists. Do you want to over write?\nY for yes, any key for no... \n')
     if over == 'Y' or over == 'y':

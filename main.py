@@ -51,7 +51,7 @@ print(welcome)
 
 def for_student(fac_no, en_no, name):
   r_no = fac_no[5:8]
-  path = '/sdcard/Project/Store/'
+  path = '/sdcard/Project/iaj/Store/'
   file_name = r_no + ' - ' + name + ' (' + fac_no + ')' +'.html'
   os.chdir(path)
   if os.path.isfile(file_name):
@@ -116,6 +116,7 @@ def main(students):
 
 wrong=1
 while(wrong):
+  utils.mkdirs()
   name = input('Enter the Excel file name: ').rstrip()
   students = None
   students = enlist.populate(name)

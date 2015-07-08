@@ -2,7 +2,14 @@ import xlrd
 import os 
 import ast
 
-os.chdir('/sdcard/Project/Input/') 
+def cd(a=0):
+  if a == 0:
+    path = '/sdcard/Project/Input/'
+  elif a == 1:
+    path = '/sdcard/Project/iaj/'
+  os.chdir(path) 
+    
+cd()
 
 def is_fac_no(fac):
   try:
@@ -18,7 +25,7 @@ def find_index(sheet):
         return [ro, co] 
 
 def file_changed(file_name):
-  os.chdir('/sdcard/Project/')
+  cd(1)
   if not os.path.isfile('conf.ini'):
     with open('conf.ini', 'w') as fi:
       print(file_name, file=fi)
@@ -37,7 +44,7 @@ def file_changed(file_name):
 
 
 def is_worksheet(name):
-  os.chdir('/sdcard/Project/Input/')
+  cd()
   if os.path.isfile(name):
     try:
       store = xlrd.open_workbook(name)
@@ -50,7 +57,7 @@ def is_worksheet(name):
     return False
     
 def get_students(file_name) :
-  os.chdir('/sdcard/Project/Input/')
+  cd()
   if is_worksheet(file_name):
     store = xlrd.open_workbook(file_name)
     sheet = store.sheet_by_index(0)
@@ -69,7 +76,7 @@ def get_students(file_name) :
       students[i]['name'] = name
       #print(students[i]['fac_no'], students[i]['en_no'], students[i]['name'])
       i=i+1
-    os.chdir('/sdcard/Project/')
+    cd()
     with open('students.db', 'w+') as fi:
       print(students, file=fi)
     return students
@@ -77,10 +84,10 @@ def get_students(file_name) :
     return None
 
 def populate(file_name, reset=0):
-  path = '/sdcard/Project/Store'
+  path = '/sdcard/Project/iaj/Store'
   if not os.path.exists(path):
     os.makedirs(path)
-  os.chdir('/sdcard/Project/')
+  cd(1) 
   if os.path.isfile('students.db') and not file_changed(file_name) and not reset:
     with open('students.db', 'r+') as fi:
       s = fi.read()
