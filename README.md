@@ -19,9 +19,10 @@ There's no guarantee that code will be easy to understand. Program is modular an
 
 ######Functions 
 The program does 3 tasks :
-1. Reads information from Attendance Excel file and downloads the result from site and saves in `/iaj/Store` as HTML file. 
+
+1. Reads information from Attendance Excel file and downloads the result from site and saves in `/iaj/Store/` as HTML file.
 2. Iterates through downloaded HTML and loads CPI and SPI of students.
-3. Creates an Excel file with Student information and their CPI and SPI. 
+3. Creates an Excel file with Student information and their CPI and SPI.
 
 ####Instructions
 1. Place all 3 `.py` files in `/Project/` folder in root of sdcard (Immediate entry of sdcard), so the path of scripts will be `/sdcard/Project/`
