@@ -1,21 +1,25 @@
 AMU B.Tech Results Downloader
 ======
-Python Script to download results of whole class/branch by providing attendance Excel file. 
+Python Script to download results of whole class/branch by providing attendance Excel file. :wink:
 
 ##Description 
 This script created by iamareebjamal batch downloads the result of B.Tech students hosted on http://ctengg.amu.ac.in by reading student information from Attendance Excel files. 
 
-This script is provided on as-is basis and there is no responsibility of the developer to ensure proper working and genuinety of results downloaded. *Use on your risk.*
+This script is provided on as-is basis and there is no responsibility of the developer to ensure proper working and genuinety of results downloaded. *Use on your risk.* :innocent:
 
 Code of the program is open *(obviously, Python)* and it is encouraged to use it for educational purposes, tweaking, merging with other programs **strictly** till it remains personal. If intended otherwise, it should follow the GNU LICENSE provided. 
 
-There's no guarantee that code will be easy to understand. Program is modular and does similar works in different modules so redundancy is natural. Assume it to be dirty coded. Be my guest to optimise it. Don't expect helpful comments.
+There's no guarantee that code will be easy to understand. Program is modular and does similar works in different modules so redundancy is natural. Assume it to be dirty coded. Be my guest to optimise it. Don't expect helpful comments. :stuck_out_tongue:
 
 ######Requirements
-+ Requires Python Environment set up, (duh).
++ Requires Python Environment set up, (duh). :unamused:
 + Currently, script is made to run on Android, but will only require change of directories in `enlist.py` and `utils.py` for working in Windows, Linux, and OS X. 
 + Requires internet connection to download results. Option 2 and 3 *(Read Instructions in `main.py`)* do not require internet if result has been downloaded previously. 
 + Requires an Attendance Excel file to access student name, faculty number and enrolment number. 
+
+######Screenshots
+![downloading results](https://raw.githubusercontent.com/iamareebjamal/get_results/master/pics/pic1.png)
+![downloaded results](https://raw.githubusercontent.com/iamareebjamal/get_results/master/pics/pic2.png)
 
 ######Functions 
 The program does 3 tasks :
@@ -37,4 +41,7 @@ Choose relevant option based on functions listed above or the instructions print
 6. Downloaded results are stored in `/iaj/Store`. You can check individual results in any HTML Viewer or Browser. 
 7. The worksheet is created in `/Output/` folder and contains CPI and SPI along with student information. 
 
-**Note** : The script saves some configuration and database files in `/iaj/` folder for future faster loading and performance purposes. Please don't delete them. You can delete the HTML files in Store folder to download result again. 
+**Note** : The script saves some configuration and database files in `/iaj/` folder for future faster loading and performance purposes. Please don't delete them :sweat:. You can delete the HTML files in Store folder to download result again. :+1:
+
+Happy 'Result'ing and best of luck! :dancers:
+All Hail Python :raised_hands:
