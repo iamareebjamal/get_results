@@ -1,23 +1,26 @@
 from bs4 import BeautifulSoup 
+import sys
 import os
 import ast
 import xlsxwriter
 
+def path():
+  return os.path.dirname(os.path.realpath(__file__))
 
 def mkdirs():
-  dirs = ['/sdcard/Project/iaj/Store', '/sdcard/Project/Input', '/sdcard/Project/Output']
+  dirs = [os.path.join(path(), 'iaj', 'Store'), os.path.join(path(), 'Input'), os.path.join(path(), 'Output')]
   for dire in dirs :
     if not os.path.exists(dire):
       os.makedirs(dire)
 
 def cd(a=0):
   if a == 0:
-    path = '/sdcard/Project/iaj/'
+    pathe = os.path.join(path(), 'iaj')
   elif a == 1 :
-    path = '/sdcard/Project/Output/'
+    pathe = os.path.join(path(), 'Output')
   elif a == 2: 
-    path = '/sdcard/Project/iaj/Store/'
-  os.chdir(path)
+    pathe = os.path.join(path(),'iaj', 'Store')
+  os.chdir(pathe)
   
 
 
@@ -41,8 +44,8 @@ def load_all(students):
       print('HTML file not found. Download files by option 1 first...') 
       return
     try:
-      spi = soup('table')[2].findAll('tr')[1].findAll('th')[5].string.strip()
-      cpi = soup('table')[2].findAll('tr')[1].findAll('th')[4].string.strip()
+      spi = soup('table')[2].findAll('tr')[1].findAll('th')[4].string.strip()
+      cpi = soup('table')[2].findAll('tr')[1].findAll('th')[5].string.strip()
     except IndexError as err:
       spi = 0
       cpi = 0
@@ -62,8 +65,8 @@ def load(students, key):
     page = fi.read()
     soup = BeautifulSoup(page)
   try:
-    spi = soup('table')[2].findAll('tr')[1].findAll('th')[5].string.strip()
-    cpi = soup('table')[2].findAll('tr')[1].findAll('th')[4].string.strip()
+    spi = soup('table')[2].findAll('tr')[1].findAll('th')[4].string.strip()
+    cpi = soup('table')[2].findAll('tr')[1].findAll('th')[5].string.strip()
   except IndexError as err:
     spi = 0
     cpi = 0
@@ -94,9 +97,9 @@ def set_marks(students):
     load_all(students)
 
 def create_worksheet(name, students):
-  path = '/sdcard/Project/Output'
-  if not os.path.exists(path):
-    os.makedirs(path)
+  pathe = os.path.join(path(), 'Output')
+  if not os.path.exists(pathe):
+    os.makedirs(pathe)
   cd(1)
   if os.path.isfile(name):
     over = input('Worksheet already exists. Do you want to over write?\nY for yes, any key for no... \n')

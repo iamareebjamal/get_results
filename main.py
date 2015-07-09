@@ -43,9 +43,11 @@ Then you will prompted 3 options:
 Note: App creates required files and databases in iaj/ folder for proper functioning. Please don't delete those files. 
     
     
-Let's start:"""
+Let's start:
 
-os.chdir('/sdcard/Project/')
+"""
+
+os.chdir(utils.path())
 
 url = 'http://ctengg.amu.ac.in/result_btech.php'
     
@@ -57,7 +59,7 @@ print(welcome)
 
 def for_student(fac_no, en_no, name):
   r_no = fac_no[5:8]
-  path = '/sdcard/Project/iaj/Store/'
+  path = os.path.join(utils.path(), 'iaj', 'Store')
   file_name = r_no + ' - ' + name + ' (' + fac_no + ')' +'.html'
   os.chdir(path)
   if os.path.isfile(file_name):
@@ -129,8 +131,9 @@ def main(students):
 
 wrong=1
 while(wrong):
-  
-  name = input('Enter the Excel file name: ').rstrip()
+  print('List of files in Input directory:')
+  enlist.list_input()
+  name = input('\n\nEnter the Excel file name: ').rstrip()
   students = None
   students = enlist.populate(name)
   if students == None:

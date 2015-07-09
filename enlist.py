@@ -1,15 +1,23 @@
 import xlrd
 import os 
 import ast
+import utils
 
 def cd(a=0):
   if a == 0:
-    path = '/sdcard/Project/Input/'
+    path = os.path.join(utils.path(), 'Input')
   elif a == 1:
-    path = '/sdcard/Project/iaj/'
+    path = os.path.join(utils.path(), 'iaj')
   os.chdir(path) 
     
 cd()
+
+def list_input():
+  cd()
+  for li in os.listdir():
+    print(li)
+
+
 
 def is_fac_no(fac):
   try:
@@ -82,7 +90,7 @@ def get_students(file_name) :
     return None
 
 def populate(file_name, reset=0):
-  path = '/sdcard/Project/iaj/Store'
+  path = os.path.join(utils.path(), 'iaj', 'Store')
   if not os.path.exists(path):
     os.makedirs(path)
   cd(1)

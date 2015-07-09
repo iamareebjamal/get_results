@@ -13,15 +13,16 @@ There's no guarantee that code will be easy to understand. Program is modular an
 
 ######Requirements
 + Requires Python Environment set up, (duh). :unamused:
-+ Currently, script is made to run on Android, but will only require change of directories in `enlist.py` and `utils.py` for working in Windows, Linux, and OS X.
-+ This branch will host the fixed Windows, Linux and Mac script while Android one will be found in `android` branch. 
++ ~~Currently, script is made to run on Android, but will only require change of directories in `enlist.py` and `utils.py` for working in Windows, Linux, and OS X.~~
++ Works on Windows, Linux and Mac. Although script is tested briefly on Windows only. 
++ This branch hosts Windows, Linux and Mac script while Android one will be found in `android` branch. 
 + Requires internet connection to download results. Option 2 and 3 *(Read [Instructions](#instructions) in `main.py`)* do not require internet if result has been downloaded previously. 
 + Requires an Attendance Excel file to access student name, faculty number and enrolment number. 
 
 ######To-Do
 - [x] Create android branch.
-- [ ] Fix master branch for Windows, Linux, Mac.
-- [ ] Fix and generalize directories and test.
+- [x] Fix master branch for Windows, Linux, Mac.
+- [x] Fix and generalize directories and test.
 
 ######Screenshots
 ![downloading results](https://raw.githubusercontent.com/iamareebjamal/get_results/master/pics/pic1.png)
@@ -36,7 +37,7 @@ The program does 3 tasks :
 3. Creates an Excel file with Student information and their CPI and SPI.
 
 ####Instructions
-1. Place all 3 `.py` files in `/Project/` folder in root of sdcard (Immediate entry of sdcard), so the path of scripts will be `/sdcard/Project/`
+1. Place all 3 `.py` files in any folder in which you have writing permissions. Like `D:\Results\` or `~/home/user/results/`. *Normally, `C:\` drive on Windows doesn't have writing permissions.
 2. Run the main script, `main.py` so it creates all necessary folders and read the instructions it prints. 
 3. Now, script will demand a file name. You need to put the Attendance Excel file in `/Input/` folder in order to do so. 
 4. Now give the exact name of Excel file to the script. *Eg:* `AM111.xlsx`
