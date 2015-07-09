@@ -13,9 +13,15 @@ There's no guarantee that code will be easy to understand. Program is modular an
 
 ######Requirements
 + Requires Python Environment set up, (duh). :unamused:
-+ Currently, script is made to run on Android, but will only require change of directories in `enlist.py` and `utils.py` for working in Windows, Linux, and OS X. 
-+ Requires internet connection to download results. Option 2 and 3 *(Read Instructions in `main.py`)* do not require internet if result has been downloaded previously. 
++ Currently, script is made to run on Android, but will only require change of directories in `enlist.py` and `utils.py` for working in Windows, Linux, and OS X.
++ This branch will host the fixed Windows, Linux and Mac script while Android one will be found in `android` branch. 
++ Requires internet connection to download results. Option 2 and 3 *(Read [Instructions](#instructions) in `main.py`)* do not require internet if result has been downloaded previously. 
 + Requires an Attendance Excel file to access student name, faculty number and enrolment number. 
+
+######To-Do
+- [x] Create android branch.
+- [ ] Fix master branch for Windows, Linux, Mac.
+- [ ] Fix and generalize directories and test.
 
 ######Screenshots
 ![downloading results](https://raw.githubusercontent.com/iamareebjamal/get_results/master/pics/pic1.png)
@@ -38,11 +44,12 @@ The program does 3 tasks :
   1. Download Results. 
   2. Load Marks. 
   3. Create Worksheet. 
-Choose relevant option based on functions listed above or the instructions printed by the script.
+Choose relevant option based on [functions](#functions) listed above or the instructions printed by the script.
 6. Downloaded results are stored in `/iaj/Store`. You can check individual results in any HTML Viewer or Browser. 
 7. The worksheet is created in `/Output/` folder and contains CPI and SPI along with student information. 
 
 **Note** : The script saves some configuration and database files in `/iaj/` folder for future faster loading and performance purposes. Please don't delete them :sweat:. You can delete the HTML files in Store folder to download result again. :+1:
 
 Happy 'Result'ing and best of luck! :dancers:
+
 All Hail Python :raised_hands:
