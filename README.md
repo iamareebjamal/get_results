@@ -12,7 +12,8 @@ Code of the program is open *(obviously, Python)* and it is encouraged to use it
 There's no guarantee that code will be easy to understand. Program is modular and does similar works in different modules so redundancy is natural. Assume it to be dirty coded. Be my guest to optimise it. Don't expect helpful comments. :stuck_out_tongue:
 
 ######Requirements
-+ Requires Python Environment set up, (duh). :unamused:
++ Requires Python 3 Environment set up, (duh). :unamused:
++ Needs these Python Modules to be installed - `BeautifulSoup`, `requests`, `xlsxwriter`, `xlrd`. Install libraries using `pip install -module_name-`. 
 + ~~Currently, script is made to run on Android, but will only require change of directories in `enlist.py` and `utils.py` for working in Windows, Linux, and OS X.~~
 + Works on Windows, Linux and Mac. Although script is tested briefly on Windows only. 
 + This branch hosts Windows, Linux and Mac script while Android one will be found in `android` branch. 
