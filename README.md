@@ -1,6 +1,6 @@
 # AMU B.Tech Results Downloader
 
-[![Codacy grade](https://img.shields.io/codacy/grade/19e342e095b74db1a35f18d8ae6f34cc.svg)]()
+[![Codacy grade](https://img.shields.io/codacy/grade/5a696561ef25409fa0531459e169eb8d.svg)]()
 [![Website](https://img.shields.io/website-up-down-green-red/http/ctengg.amu.ac.in.svg)]()
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)  
 
