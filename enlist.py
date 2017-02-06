@@ -8,7 +8,7 @@ def cd(a=0):
     path = os.path.join(utils.path(), 'Input')
   elif a == 1:
     path = os.path.join(utils.path(), 'iaj')
-  os.chdir(path) 
+  os.chdir(path)
     
 cd()
 
@@ -30,7 +30,7 @@ def find_index(sheet):
   for ro in range(0, sheet.nrows):
     for co in range(0,sheet.ncols):
       if is_fac_no(sheet.cell_value(rowx=ro, colx=co)):
-        return [ro, co] 
+        return [ro, co]
 
 def file_changed(file_name):
   cd(1)

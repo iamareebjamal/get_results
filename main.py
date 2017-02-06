@@ -5,8 +5,8 @@ utils.mkdirs()
 import requests 
 import os
 import enlist
-import time 
-from bs4 import BeautifulSoup 
+import time
+from bs4 import BeautifulSoup
 
 
 
@@ -17,26 +17,26 @@ AMU B.Tech Results Downloader
 This Python script downloads B.Tech Results of whole class based on information in attendance Excel file.
 
 First you need to put Excel file in Input/ folder
-Then type the name of file when asked (Default : store.xlsx) 
+Then type the name of file when asked (Default : store.xlsx)
 This will load the information about students from the Excel file and stores it in students.db for future faster access.
 Then you will prompted 3 options:
 
-    First option downloads the result of whole class and 
+    First option downloads the result of whole class and
     stores them as html pages in Store/ folder. 
-    Note : This option should be run at least once to 
+    Note : This option should be run at least once to
     download  all necessary result files for further options
-    If there are no result files in Store/ folder, then 
-    script will not run properly. 
+    If there are no result files in Store/ folder, then
+    script will not run properly.
    
-    Second option loads CPI and SPI from downloaded 
+    Second option loads CPI and SPI from downloaded
     html to script database as results.db for future faster
-    access. 
-    Note : This option is necessary to be run in 
-    order to run 3rd option. If this option is not run, 
+    access.
+    Note : This option is necessary to be run in
+    order to run 3rd option. If this option is not run,
     then no data can be written in Excel file. 
     
-    Third option reads your CPI and SPI from Updated 
-    database and saves the information as Excel file in 
+    Third option reads your CPI and SPI from Updated
+    database and saves the information as Excel file in
     Output/ folder.
     
     
@@ -63,7 +63,7 @@ def for_student(fac_no, en_no, name):
   file_name = r_no + ' - ' + name + ' (' + fac_no + ')' +'.html'
   os.chdir(path)
   if os.path.isfile(file_name):
-    print('File Exists... Skipping\n\t', file_name) 
+    print('File Exists... Skipping\n\t', file_name)
   else :
     try:
       form_data = {'FN':fac_no, 'EN':en_no, 'submit':'submit'}
@@ -79,9 +79,9 @@ def for_student(fac_no, en_no, name):
       elif 'This Result has not been declared yet!' in response.text:
         print('No result')
       elif 'Faculty_No or En_No is incorrect!' in response.text :
-        print('Wrong Faculty or Enrolment No.') 
+        print('Wrong Faculty or Enrolment No.')
       else:
-        print('Wrong input data or no result...') 
+        print('Wrong input data or no result...')
     
     except requests.exceptions.ConnectionError as err:
       print('No Connection')
