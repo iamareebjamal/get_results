@@ -16,16 +16,16 @@ def mkdirs():
 def cd(a=0):
   if a == 0:
     pathe = os.path.join(path(), 'iaj')
-  elif a == 1 :
+  elif a == 1:
     pathe = os.path.join(path(), 'Output')
-  elif a == 2: 
+  elif a == 2:
     pathe = os.path.join(path(),'iaj', 'Store')
   os.chdir(pathe)
   
 
 
 def save(students):
-  cd() 
+  cd()
   with open('results.db', 'w+') as fi:
       print(students, file=fi)
 
@@ -51,7 +51,7 @@ def load_all(students):
       cpi = 0
     students[key]['spi'] = spi
     students[key]['cpi'] = cpi
-    print('Loaded:', students[key]['name']) 
+    print('Loaded:', students[key]['name'])
   save(students)
   return students
 
@@ -76,7 +76,7 @@ def set_marks(students):
   cd()
   if os.path.isfile('results.db'):
     with open('results.db', 'r+') as fi:
-      data = fi.read() 
+      data = fi.read()
       res = ast.literal_eval(data)
     if students[1]['name']==res[1]['name']:
       pass
