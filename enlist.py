@@ -23,7 +23,7 @@ def is_fac_no(fac):
   try:
     (start, finish) = fac[0:2], fac[5:8]
     return start.isdigit() and finish.isdigit() and len(fac) == 8
-  except TypeError as err:
+  except TypeError:
     return False
 
 def find_index(sheet):
@@ -55,8 +55,8 @@ def is_worksheet(name):
   cd()
   if os.path.isfile(name):
     try:
-      store = xlrd.open_workbook(name)
-    except xlrd.biffh.XLRDError as err:
+      xlrd.open_workbook(name)
+    except xlrd.biffh.XLRDError:
       print('Unsupported Format or corrupt file')
       return False
     return True
@@ -104,7 +104,7 @@ def populate(file_name, reset=0):
       else:
         print('Bad dictionary file...\nRetrying reading from Excel file')
         return get_students(file_name)
-    except KeyError as err:
+    except KeyError:
       print('Bad dictionary file... \nRetrying reading Excel file')
       return get_students(file_name) 
   else :

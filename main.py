@@ -5,7 +5,6 @@ utils.mkdirs()
 import requests 
 import os
 import enlist
-import time
 from bs4 import BeautifulSoup
 
 
@@ -83,7 +82,7 @@ def for_student(fac_no, en_no, name):
       else:
         print('Wrong input data or no result...')
     
-    except requests.exceptions.ConnectionError as err:
+    except requests.exceptions.ConnectionError:
       print('No Connection')
   
 def get_result(students):

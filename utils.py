@@ -1,5 +1,4 @@
-from bs4 import BeautifulSoup 
-import sys
+from bs4 import BeautifulSoup
 import os
 import ast
 import xlsxwriter
@@ -40,13 +39,13 @@ def load_all(students):
       with open(file_name, 'r+') as fi:
         page = fi.read()
         soup = BeautifulSoup(page)
-    except IOError as err:
+    except IOError:
       print('HTML file not found. Download files by option 1 first...') 
       return
     try:
       spi = soup('table')[1].findAll('td')[4].string.strip()
       cpi = soup('table')[1].findAll('td')[5].string.strip()
-    except IndexError as err:
+    except IndexError:
       spi = 0
       cpi = 0
     students[key]['spi'] = spi
@@ -67,7 +66,7 @@ def load(students, key):
   try:
     spi = soup('table')[2].findAll('tr')[1].findAll('th')[4].string.strip()
     cpi = soup('table')[2].findAll('tr')[1].findAll('th')[5].string.strip()
-  except IndexError as err:
+  except IndexError:
     spi = 0
     cpi = 0
   return {'cpi':cpi, 'spi' : spi}
@@ -87,7 +86,7 @@ def set_marks(students):
       try:
         students[key]['cpi'] = res[key]['cpi']
         students[key]['spi'] = res[key]['spi']
-      except KeyError as err :
+      except KeyError :
         students[key]['cpi'] = load(students, key)['cpi']
         students[key]['spi'] = load(students, key)['spi']
     save(students)
@@ -108,7 +107,7 @@ def create_worksheet(name, students):
     else:
       return 'Skipping writing file...\n Check in Output/ directory'
   try :
-    test = students[1]['cpi']
+    students[1]['cpi']
   except KeyError as err :
     return 'Wrong input file. Run 2. Load marks first...'
   data = xlsxwriter.Workbook(name)
