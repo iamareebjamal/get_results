@@ -1,6 +1,4 @@
 import utils
-
-
 import requests
 import os
 import enlist
@@ -115,8 +113,6 @@ def main(students):
         print('Please choose valid option')
         input('\n\n\nPress any key to Continue...')
     main(students)
-
-
 
 
 if __name__ == "__main__":

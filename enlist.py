@@ -12,9 +12,6 @@ def cd(a=0):
     os.chdir(path)
 
 
-cd()
-
-
 def list_input():
     cd()
     for li in os.listdir():
