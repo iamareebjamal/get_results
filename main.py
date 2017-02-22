@@ -127,9 +127,9 @@ if __name__ == "__main__":
     while (wrong):
         print('List of files in Input directory:')
         enlist.list_input()
-        name = input('\n\nEnter the Excel file name: ').rstrip()
+        index = input('\n\nEnter the File Index: ').rstrip()
         students = None
-        students = enlist.populate(name)
+        students = enlist.populate(int(index))
         if students == None:
             print(
                 'Error reading student database...\nHave you put Attendance file in Input/ folder and provided correct name?\n\nRetrying running script')

@@ -11,12 +11,16 @@ def cd(a=0):
         path = os.path.join(utils.path(), 'iaj')
     os.chdir(path)
 
-
+file_names = dict()
 def list_input():
     cd()
+    file_names.clear()
+    counter = 1
     for li in os.listdir():
-        print(li)
-
+        file_names[counter] = li 
+        print(str(counter) + ". " + li)
+        counter += 1
+         
 
 def is_fac_no(fac):
     try:
@@ -92,11 +96,12 @@ def get_students(file_name):
         return None
 
 
-def populate(file_name, reset=0):
+def populate(counter, reset=0):
     path = os.path.join(utils.path(), 'iaj', 'Store')
     if not os.path.exists(path):
         os.makedirs(path)
     cd(1)
+    file_name = file_names[counter]
     if os.path.isfile('students.db') and not file_changed(file_name) and not reset:
         with open('students.db', 'r+') as fi:
             s = fi.read()
