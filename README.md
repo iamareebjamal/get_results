@@ -1,4 +1,4 @@
-# AMU B.Tech Results Downloader
+# AMU B.Tech Results Downloader Python Script
 
 [![Codacy grade](https://img.shields.io/codacy/grade/5a696561ef25409fa0531459e169eb8d.svg)]()
 [![Website](https://img.shields.io/website-up-down-green-red/http/ctengg.amu.ac.in.svg)]()
