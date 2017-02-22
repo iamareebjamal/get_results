@@ -14,9 +14,11 @@ def cd(a=0):
 
 def list_input():
     cd()
+    counter = 1
     for li in os.listdir():
-        print(li)
-
+        print(str(counter) + ". " + li)
+        counter += 1
+         
 
 def is_fac_no(fac):
     try:
