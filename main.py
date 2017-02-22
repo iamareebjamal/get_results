@@ -42,7 +42,6 @@ welcome = \
     """
 
 
-
 def for_student(fac_no, en_no, name):
     r_no = fac_no[5:8]
     path = os.path.join(utils.path(), 'iaj', 'Store')
@@ -52,7 +51,8 @@ def for_student(fac_no, en_no, name):
         print('File Exists... Skipping\n\t', file_name)
     else:
         try:
-            response = requests.get('http://ctengg.amu.ac.in/web/table_resultnew.php?fac='+fac_no+'&en='+en_no+'&prog=btech')
+            url = 'http://ctengg.amu.ac.in/web/table_resultnew.php?fac='+fac_no+'&en='+en_no+'&prog=btech'
+            response = requests.get(url)
 
             soup = BeautifulSoup(response.text)
             with open(file_name, 'w+') as ou:
@@ -67,55 +67,56 @@ def for_student(fac_no, en_no, name):
             else:
                 print('Wrong input data or no result...')
 
-        except requests.exceptions.ConnectionError:
+        except requests.ConnectionError:
             print('No Connection')
 
 
-def get_result(students):
+def get_result():
     for key in students.keys():
         name = students[key]['name']
         en_no = students[key]['en_no']
         fac_no = students[key]['fac_no']
         print('\nGetting result of ', fac_no, name)
         for_student(fac_no, en_no, name)
-        # time.sleep(.5)
     print('\n\nAll results saved')
 
 
-def main(students):
-    menu = \
-        '''
+def main():
+    x = 0
+
+    while x != 4:
+        menu = \
+            '''
 
 
-        1. Download Results.
-        2. Load Marks.
-        3. Create result worksheet.
-        4. Exit
+            1. Download Results.
+            2. Load Marks.
+            3. Create result worksheet.
+            4. Exit
 
-        '''
+            '''
 
-    print(menu)
-    x = input()
+        print(menu)
+        x = input()
 
-    if x == '1':
-        get_result(students)
-        input('Press any key to Continue...')
-    elif x == '2':
-        utils.set_marks(students)
-        input('Press any key to Continue...')
-    elif x == '3':
-        print(utils.create_worksheet(name, students))
-        input('Press any key to Continue...')
-    elif x == '4':
-        return
-    else:
-        print('Please choose valid option')
-        input('\n\n\nPress any key to Continue...')
-    main(students)
+        if x == '1':
+            get_result()
+            input('Press any key to Continue...')
+        elif x == '2':
+            utils.set_marks(students)
+            input('Press any key to Continue...')
+        elif x == '3':
+            print(utils.create_worksheet(enlist.get_file_name(index), students))
+            input('Press any key to Continue...')
+        elif x == '4':
+            return
+        else:
+            print('Please choose valid option')
+            input('\n\n\nPress any key to Continue...')
 
 
 if __name__ == "__main__":
-    utils.mkdirs()
+    utils.init_dir()
     # Let's create all needed directories before anything else!
     os.chdir(utils.path())
 
@@ -124,15 +125,16 @@ if __name__ == "__main__":
     print(welcome)
     
     wrong = 1
-    while (wrong):
+    while wrong:
         print('List of files in Input directory:')
         enlist.list_input()
         index = input('\n\nEnter the File Index: ').rstrip()
         students = None
         students = enlist.populate(int(index))
-        if students == None:
-            print(
-                'Error reading student database...\nHave you put Attendance file in Input/ folder and provided correct name?\n\nRetrying running script')
+        if students:
+            print('Error reading student database...\n'
+                  'Have you put Attendance file in Input/ folder and provided correct name?\n\n'
+                  'Retrying running script')
         else:
             wrong = 0
-            main(students)
+            main()

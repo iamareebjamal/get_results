@@ -8,7 +8,7 @@ def path():
     return os.path.dirname(os.path.realpath(__file__))
 
 
-def mkdirs():
+def init_dir():
     dirs = [os.path.join(path(), 'iaj', 'Store'), os.path.join(path(), 'Input'), os.path.join(path(), 'Output')]
     for dire in dirs:
         if not os.path.exists(dire):
@@ -16,13 +16,14 @@ def mkdirs():
 
 
 def cd(a=0):
+    folder = ''
     if a == 0:
-        pathe = os.path.join(path(), 'iaj')
+        folder = os.path.join(path(), 'iaj')
     elif a == 1:
-        pathe = os.path.join(path(), 'Output')
+        folder = os.path.join(path(), 'Output')
     elif a == 2:
-        pathe = os.path.join(path(), 'iaj', 'Store')
-    os.chdir(pathe)
+        folder = os.path.join(path(), 'iaj', 'Store')
+    os.chdir(folder)
 
 
 def save(students):
@@ -102,9 +103,9 @@ def set_marks(students):
 
 
 def create_worksheet(name, students):
-    pathe = os.path.join(path(), 'Output')
-    if not os.path.exists(pathe):
-        os.makedirs(pathe)
+    folder = os.path.join(path(), 'Output')
+    if not os.path.exists(folder):
+        os.makedirs(folder)
     cd(1)
     if os.path.isfile(name):
         over = input('Worksheet already exists. Do you want to over write?\nY for yes, any key for no... \n')
@@ -114,7 +115,7 @@ def create_worksheet(name, students):
             return 'Skipping writing file...\n Check in Output/ directory'
     try:
         students[1]['cpi']
-    except KeyError as err:
+    except KeyError:
         return 'Wrong input file. Run 2. Load marks first...'
     data = xlsxwriter.Workbook(name)
     data_sheet = data.add_worksheet()

@@ -3,24 +3,31 @@ import os
 import ast
 import utils
 
+file_names = dict()
+
 
 def cd(a=0):
+    path = ''
     if a == 0:
         path = os.path.join(utils.path(), 'Input')
     elif a == 1:
         path = os.path.join(utils.path(), 'iaj')
     os.chdir(path)
 
-file_names = dict()
+
 def list_input():
     cd()
     file_names.clear()
     counter = 1
-    for li in os.listdir():
+    for li in os.listdir(os.getcwd()):
         file_names[counter] = li 
         print(str(counter) + ". " + li)
         counter += 1
-         
+
+
+def get_file_name(index):
+    return file_names[index]
+
 
 def is_fac_no(fac):
     try:
@@ -61,7 +68,7 @@ def is_worksheet(name):
     if os.path.isfile(name):
         try:
             xlrd.open_workbook(name)
-        except xlrd.biffh.XLRDError:
+        except xlrd.XLRDError:
             print('Unsupported Format or corrupt file')
             return False
         return True
@@ -87,7 +94,7 @@ def get_students(file_name):
             students[i]['fac_no'] = fac_no
             students[i]['en_no'] = en_no
             students[i]['name'] = name
-            i = i + 1
+            i += 1
         cd(1)
         with open('students.db', 'w+') as fi:
             print(students, file=fi)
