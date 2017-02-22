@@ -68,12 +68,11 @@ def is_worksheet(name):
     if os.path.isfile(name):
         try:
             xlrd.open_workbook(name)
+            return True
         except xlrd.XLRDError:
             print('Unsupported Format or corrupt file')
-            return False
-        return True
-    else:
-        return False
+
+    return False
 
 
 def get_students(file_name):
