@@ -1,7 +1,5 @@
 import utils
 
-utils.mkdirs()
-# Let's create all needed directories before anything else!
 
 import requests
 import os
@@ -45,13 +43,6 @@ welcome = \
 
     """
 
-os.chdir(utils.path())
-
-url = 'http://ctengg.amu.ac.in/result_btech.php'
-
-# Let's Go!
-
-print(welcome)
 
 
 def for_student(fac_no, en_no, name):
@@ -126,16 +117,29 @@ def main(students):
     main(students)
 
 
-wrong = 1
-while (wrong):
-    print('List of files in Input directory:')
-    enlist.list_input()
-    name = input('\n\nEnter the Excel file name: ').rstrip()
-    students = None
-    students = enlist.populate(name)
-    if students == None:
-        print(
-            'Error reading student database...\nHave you put Attendance file in Input/ folder and provided correct name?\n\nRetrying running script')
-    else:
-        wrong = 0
-        main(students)
+
+
+if __name__ == "__main__":
+    utils.mkdirs()
+    # Let's create all needed directories before anything else!
+    os.chdir(utils.path())
+
+    url = 'http://ctengg.amu.ac.in/result_btech.php'
+
+    # Let's Go!
+
+    print(welcome)
+    
+    wrong = 1
+    while (wrong):
+        print('List of files in Input directory:')
+        enlist.list_input()
+        name = input('\n\nEnter the Excel file name: ').rstrip()
+        students = None
+        students = enlist.populate(name)
+        if students == None:
+            print(
+                'Error reading student database...\nHave you put Attendance file in Input/ folder and provided correct name?\n\nRetrying running script')
+        else:
+            wrong = 0
+            main(students)
