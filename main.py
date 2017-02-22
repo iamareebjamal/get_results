@@ -52,8 +52,7 @@ def for_student(fac_no, en_no, name):
         print('File Exists... Skipping\n\t', file_name)
     else:
         try:
-            form_data = {'FN': fac_no, 'EN': en_no, 'submit': 'submit'}
-            response = requests.post(url, data=form_data)
+            response = requests.get('http://ctengg.amu.ac.in/web/table_resultnew.php?fac='+fac_no+'&en='+en_no+'&prog=btech')
 
             soup = BeautifulSoup(response.text)
             with open(file_name, 'w+') as ou:
@@ -119,8 +118,6 @@ if __name__ == "__main__":
     utils.mkdirs()
     # Let's create all needed directories before anything else!
     os.chdir(utils.path())
-
-    url = 'http://ctengg.amu.ac.in/result_btech.php'
 
     # Let's Go!
 
