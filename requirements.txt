@@ -1,0 +1,4 @@
+bs4
+requests
+xlsxwriter
+xlrd
