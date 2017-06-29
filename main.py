@@ -1,140 +1,53 @@
-import utils
-import requests
-import os
-import enlist
-from bs4 import BeautifulSoup
-
-welcome = \
-    """
-
-    AMU B.Tech Results Downloader
-    This Python script downloads B.Tech Results of whole class based on information in attendance Excel file.
-
-    First you need to put Excel file in Input/ folder
-    Then type the name of file when asked (Default : store.xlsx)
-    This will load the information about students from the Excel file and stores it in students.db for future faster access.
-    Then you will prompted 3 options:
-
-        First option downloads the result of whole class and
-        stores them as html pages in Store/ folder.
-        Note : This option should be run at least once to
-        download  all necessary result files for further options
-        If there are no result files in Store/ folder, then
-        script will not run properly.
-
-        Second option loads CPI and SPI from downloaded
-        html to script database as results.db for future faster
-        access.
-        Note : This option is necessary to be run in
-        order to run 3rd option. If this option is not run,
-        then no data can be written in Excel file.
-
-        Third option reads your CPI and SPI from Updated
-        database and saves the information as Excel file in
-        Output/ folder.
+import json
+import result
+import student
+import sys
+from operator import itemgetter
 
 
-    Note: App creates required files and databases in iaj/ folder for proper functioning. Please don't delete those files.
-
-
-    Let's start:
-
-    """
-
-
-def for_student(fac_no, en_no, name):
-    r_no = fac_no[5:8]
-    path = os.path.join(utils.path(), 'iaj', 'Store')
-    file_name = r_no + ' - ' + name + ' (' + fac_no + ')' + '.html'
-    os.chdir(path)
-    if os.path.isfile(file_name):
-        print('File Exists... Skipping\n\t', file_name)
+def get_input_file():
+    args = sys.argv[1:]
+    if len(args) >= 1:
+        return args[0]
     else:
-        try:
-            url = 'http://ctengg.amu.ac.in/web/table_resultnew.php?fac='+fac_no+'&en='+en_no+'&prog=btech'
-            response = requests.get(url)
-
-            soup = BeautifulSoup(response.text)
-            with open(file_name, 'w+') as ou:
-                print(soup.prettify(), file=ou)
-
-            if 'CPI' in response.text:
-                print('Saved result of', name)
-            elif 'This Result has not been declared yet!' in response.text:
-                print('No result')
-            elif 'Faculty_No or En_No is incorrect!' in response.text:
-                print('Wrong Faculty or Enrolment No.')
-            else:
-                print('Wrong input data or no result...')
-
-        except requests.ConnectionError:
-            print('No Connection')
+        return raw_input('Please enter the spreadsheet name containing the students credentials: ')
 
 
-def get_result():
-    for key in students.keys():
-        name = students[key]['name']
-        en_no = students[key]['en_no']
-        fac_no = students[key]['fac_no']
-        print('\nGetting result of ', fac_no, name)
-        for_student(fac_no, en_no, name)
-    print('\n\nAll results saved')
+def ask_print(json):
+    should_print = raw_input('Print the parsed result json? (Y/N): ')
+
+    if not (should_print == 'N' or should_print == 'n'):
+        print json
 
 
-def main():
-    x = 0
+def save_results(json):
+    out_name = raw_input(
+        'Please enter the name you want for the output file: ')
 
-    while x != 4:
-        menu = \
-            '''
-
-
-            1. Download Results.
-            2. Load Marks.
-            3. Create result worksheet.
-            4. Exit
-
-            '''
-
-        print(menu)
-        x = input()
-
-        if x == '1':
-            get_result()
-            input('Press any key to Continue...')
-        elif x == '2':
-            utils.set_marks(students)
-            input('Press any key to Continue...')
-        elif x == '3':
-            print(utils.create_worksheet(enlist.get_file_name(index), students))
-            input('Press any key to Continue...')
-        elif x == '4':
-            return
-        else:
-            print('Please choose valid option')
-            input('\n\n\nPress any key to Continue...')
+    try:
+        out = open(out_name + '.json', 'w+')
+        out.write(json)
+        out.close()
+    except IOError:
+        print 'Error in writing output'
 
 
 if __name__ == "__main__":
-    utils.init_dir()
-    # Let's create all needed directories before anything else!
-    os.chdir(utils.path())
+    file_name = get_input_file()
+    print file_name
 
-    # Let's Go!
+    collector = student.Collector(file_name)
+    students = collector.collect()
+    print "No of students: %d" % len(students)
+    downloader = result.Downloader(students)
+    downloader.download()
 
-    print(welcome)
-    
-    wrong = 1
-    while wrong:
-        print('List of files in Input directory:')
-        enlist.list_input()
-        index = input('\n\nEnter the File Index: ').rstrip()
-        students = None
-        students = enlist.populate(int(index))
-        if students:
-            print('Error reading student database...\n'
-                  'Have you put Attendance file in Input/ folder and provided correct name?\n\n'
-                  'Retrying running script')
-        else:
-            wrong = 0
-            main()
+    print '\nParsing... '
+    parser = result.Parser(students, downloader.get_store_dir())
+    result = sorted(parser.get_results(), key=itemgetter(
+        'cpi', 'spi'), reverse=True)
+
+    result_json = json.dumps(result, indent=2)
+    ask_print(result_json)
+
+    save_results(result_json)
