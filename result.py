@@ -11,7 +11,7 @@ def get_file_name(base_dir, student):
     return os.path.join(base_dir, "%s-%s.html" % (student['fac_no'], student['name']))
 
 
-def parse_type(self, data):
+def parse_type(data):
     data = str(data)
 
     if data.isdigit():
@@ -89,7 +89,8 @@ class Parser(object):
         if not os.path.isdir(self.__base_dir):
             raise ValueError('Invalid store directory passed')
 
-    def parse_page(self, page):
+    @staticmethod
+    def parse_page(page):
         table = BeautifulSoup(page, "html.parser")
         credit_keys = ['faculty_number',
                        'enrolment', 'name', 'ec', 'spi', 'cpi']
@@ -109,7 +110,7 @@ class Parser(object):
             file_path = file_path = get_file_name(self.__base_dir, student)
             try:
                 data = open(file_path, 'r')
-                results.append(self.parse_page(data.read()))
+                results.append(Parser.parse_page(data.read()))
                 data.close()
             except IOError:
                 print "Error opening file %s" % file_path
