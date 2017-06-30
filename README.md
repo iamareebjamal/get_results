@@ -1,7 +1,7 @@
 # AMU B.Tech Result Analyser
 
-[![Codacy grade](https://img.shields.io/codacy/grade/5a696561ef25409fa0531459e169eb8d.svg)]()
-[![Website](https://img.shields.io/website-up-down-green-red/http/ctengg.amu.ac.in.svg)]()
+[![Codacy grade](https://img.shields.io/codacy/grade/5a696561ef25409fa0531459e169eb8d.svg)](https://codacy.com/app/iamareebjamal/get_results)
+[![Website](https://img.shields.io/website-up-down-green-red/http/ctengg.amu.ac.in.svg)](http://ctengg.amu.ac.in/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)  
 
 > Python Script to download results of whole class/branch by providing attendance Excel file
