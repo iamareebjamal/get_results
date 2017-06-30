@@ -1,4 +1,3 @@
-import os
 import re
 import xlrd
 
@@ -9,7 +8,7 @@ def is_fac_no(fac_no):
     return fac_no_pattern.match(fac_no) != None
 
 
-class Collector:
+class Collector(object):
     __worksheet = None
 
     def __init__(self, file_path):

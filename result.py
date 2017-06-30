@@ -11,7 +11,18 @@ def get_file_name(base_dir, student):
     return os.path.join(base_dir, "%s-%s.html" % (student['fac_no'], student['name']))
 
 
-class Downloader:
+def parse_type(self, data):
+    data = str(data)
+
+    if data.isdigit():
+        data = int(data)
+    elif '.' in data and data.replace('.', '', 1).isdigit():
+        data = float(data)
+
+    return data
+
+
+class Downloader(object):
     __base_url_format = "http://ctengg.amu.ac.in/web/table_resultnew.php?fac=%s&en=%s&prog=btech"
     __store_path = 'store'
     __concurrent = 200
@@ -21,8 +32,8 @@ class Downloader:
             os.mkdir(self.__store_path)
         self.students = student_list
         self.q = Queue(self.__concurrent * 2)
-        for i in xrange(self.__concurrent):
-            thread = Thread(target = self.consume)
+        for _ in xrange(self.__concurrent):
+            thread = Thread(target=self.consume)
             thread.daemon = True
             thread.start()
 
@@ -60,7 +71,7 @@ class Downloader:
         print 'Started downloading...'
         try:
             for student in self.students:
-              self.q.put(student)
+                self.q.put(student)
             self.q.join()
         except KeyboardInterrupt:
             sys.exit(1)
@@ -69,7 +80,7 @@ class Downloader:
         return self.__store_path
 
 
-class Parser:
+class Parser(object):
     __base_dir = None
 
     def __init__(self, student_list, base_dir):
@@ -77,16 +88,6 @@ class Parser:
         self.__base_dir = base_dir
         if not os.path.isdir(self.__base_dir):
             raise ValueError('Invalid store directory passed')
-
-    def parse_type(self, data):
-        data = str(data)
-
-        if data.isdigit():
-            data = int(data)
-        elif '.' in data and data.replace('.', '', 1).isdigit():
-            data = float(data)
-
-        return data
 
     def parse_page(self, page):
         table = BeautifulSoup(page, "html.parser")
@@ -97,8 +98,8 @@ class Parser:
         cred_table = table.find(
             'table', {'style': 'width:100%;text-align:center;'})
         for row in cred_table.find_all('tr')[1:]:
-            dataset = OrderedDict(zip(credit_keys, (self.parse_type(
-                cell.get_text()) for cell in row.find_all('td'))))
+            dataset = OrderedDict(
+                zip(credit_keys, (parse_type(cell.get_text()) for cell in row.find_all('td'))))
 
         return dataset
 
