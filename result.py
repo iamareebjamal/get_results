@@ -26,6 +26,7 @@ class Downloader(object):
     __base_url_format = "http://ctengg.amu.ac.in/web/table_resultnew.php?fac=%s&en=%s&prog=btech"
     __store_path = 'store'
     __concurrent = 200
+    __retry_counter = {}
 
     def __init__(self, student_list):
         if not os.path.exists(self.__store_path):
@@ -44,6 +45,19 @@ class Downloader(object):
                 self.q.put(student)
             self.q.task_done()
 
+    def retry(self, en_no):
+        if en_no in self.__retry_counter:
+            if self.__retry_counter[en_no] > 5:
+                print 'Tried downloading results many times for enrolment number %s... Giving up now. Sorry :\'(' % en_no
+                return True
+
+            self.__retry_counter[en_no] += 1
+        else:
+            self.__retry_counter[en_no] = 0
+
+        return False
+
+
     def process(self, student):
         file_path = get_file_name(self.__store_path, student)
         fac_no = student['fac_no']
@@ -52,6 +66,7 @@ class Downloader(object):
             print "Result for %s - %s already exists. Skipping..." % (fac_no, name)
         else:
             en_no = student['en_no']
+
             response = requests.get(
                 self.__base_url_format % (fac_no, en_no))
 
@@ -64,7 +79,7 @@ class Downloader(object):
             elif response and 'Student record not found' in content:
                 print 'Either result is unavailable or error in credentials %s %s %s' % (fac_no, en_no, student['name'])
             else:
-                return False
+                return self.retry(en_no)
         return True
 
     def download(self):
